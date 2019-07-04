@@ -1,0 +1,10 @@
+[user]
+	email = matthias.antony@tum.de
+	name = Matthias
+[core]
+    editor = vim
+[color]
+    ui = auto
+[alias]
+    tree = log --graph --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s' --date=short --abbrev-commit
+    l = log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an %Cgreen%d %Creset%s' --date=short

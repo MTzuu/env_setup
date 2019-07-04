@@ -14,3 +14,7 @@ fi
 if [ -f ~/.bash_prompt ]; then
     . ~/.bash_prompt
 fi
+
+export HISTTIMEFORMAT="%h %d %H:%M:%S "
+export HISTSIZE=10000
+export HISTFILESIZE=10000
