@@ -38,14 +38,20 @@ def main():
     for key, value in config.items():
         print("    {}    ->    {}".format(value, key))
 
-    print("\n{:!^80}\n".format(" BE AWARE THAT FILES MENTIONED ABOVE WILL BE REPLACED BY A SYMBOLIC LINK! "))
+    if query_yes_no("\n{:80}".format("Do you want to keep the old config files?\ne.g. .bashrc -> .bashrc.bck"), default="no"):
+        keepbackup=True
+    else:
+        keepbackup=False
 
     if query_yes_no("Do you want to continue?"):
         for key, value in adaptedConfig.items():
             print("\nExecuting    {}    ->    {}".format(value, key))
             try:
                 if os.path.lexists(value):
-                    os.remove(value)
+                    if keepbackup:
+                        os.rename(value, value + ".bck")
+                    else:
+                        os.remove(value)
                 os.symlink(key, value)
             except Exception as e:
                 print("Error during symlink creation! Exception raised:")
