@@ -13,4 +13,6 @@ class Config(object):
         "git/.gitconfig"        : "/home/" + user + "/.gitconfig",
 
         "vim/.vimrc"            : "/home/" + user + "/.vimrc",
+        "i3/config"             : "/home/" + user + "/.config/i3/config",
+        "i3status/config"       : "/home/" + user + "/.config/i3status/config",
     }
