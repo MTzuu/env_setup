@@ -4,16 +4,17 @@ general {
   interval = 5
 }
 
-order += "ethernet enp1s0"
+order += "wireless wlan0"
 order += "disk /"
 order += "memory"
 order += "load"
 order += "volume master"
+order += "battery all"
 order += "tztime local"
 
-ethernet enp1s0 {
-  format_up = "E: %ip (%speed)"
-  format_down = "E: down"
+wireless wlan0 {
+  format_up = "W: (%quality at %essid) %ip"
+  format_down = "W: down"
 }
 
 tztime local {
@@ -37,3 +38,11 @@ volume master {
   device = "default"
   mixer = "Master"
 }
+
+battery all {
+  format = "%status %percentage %remaining"
+  status_chr = "! CHR"
+  status_bat = "BAT"
+  status_full = "FULL"
+}
+

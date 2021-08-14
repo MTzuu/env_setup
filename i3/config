@@ -7,8 +7,8 @@ exec ~/.fehbg
 # enable transparancy with picom
 exec picom
 
-# use gnome authentication agent
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# use lxqt policykit agent
+exec /usr/bin/lxqt-policykit-agent
 
 # set modifier key to Windows key
 set $mod Mod4
