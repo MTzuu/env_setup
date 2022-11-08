@@ -1,3 +1,6 @@
+# start fcitx5 for japanese input
+exec --no-startup-id fcitx5 -d
+
 # Set keyboard layout to de-latin1
 exec "setxkbmap -layout de"
 
@@ -27,6 +30,9 @@ bindsym $mod+Shift+q kill
 
 # start dmenu
 bindsym $mod+d exec dmenu_run
+
+# lock screen
+bindsym $mod+Control+l exec i3lock -i /home/matthias/Pictures/hubble.png
 
 # change focus
 bindsym $mod+j focus left
@@ -169,6 +175,11 @@ bar {
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle
+
+# Use brightness controls for the notebook
+
+bindsym XF86MonBrightnessUp exec `sudo brightness_up`
+bindsym XF86MonBrightnessDown exec `sudo brightness_down`
 
 # disable titlebar on firefox
 for_window [class="firefox"] border pixel 2
