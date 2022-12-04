@@ -252,13 +252,12 @@ bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 # bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle
 
 # Use brightness controls for the notebook
-
 bindsym XF86MonBrightnessUp exec `sudo brightness_up`
 bindsym XF86MonBrightnessDown exec `sudo brightness_down`
 
-# keybind for creating screenshots
-
-bindsym $mod+Shift+s exec grimshot save area "$HOME/Pictures/Screenshots/$(date "+%Y.%m.%d_%H:%M".png)"
+# keybindings for creating screenshots
+bindsym $mod+Shift+s exec grimshot copy area
+bindsym Print exec grimshot save area "$HOME/Pictures/Screenshots/$(date "+%Y.%m.%d_%H:%M".png)"
 
 # disable titlebar on firefox
 # for_window [class="firefox"] border pixel 2
