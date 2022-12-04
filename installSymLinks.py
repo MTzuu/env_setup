@@ -2,6 +2,7 @@
 
 import os               # used to perform filesystem actions
 import textwrap
+from pathlib import Path
 
 from linkConfig import Config
 
@@ -27,9 +28,11 @@ def query_yes_no(question, default="yes") -> "bool":
 
 def main():
     config = Config.Linux
+    dirs = Config.LinuxDirs
 
     currentDir = os.path.dirname(os.path.abspath(__file__))
     adaptedConfig = {}
+
     for key in config:
         newkey = os.path.join(currentDir, key)
         adaptedConfig[newkey] = config[key]
@@ -40,20 +43,22 @@ def main():
     for key, value in config.items():
         print("    {}    ->    {}".format(value, key))
 
-    if query_yes_no("\n{:80}".format("Do you want to keep the old config files?\ne.g. .bashrc -> .bashrc.bck"), default="no"):
-        keepbackup=True
-    else:
-        keepbackup=False
-
     if query_yes_no("Do you want to continue?"):
+        # create directories needed for config files
+        # living in ~/.config
+        for dir in dirs:
+            try:
+                Path(dir).mkdir(parents=True, exist_ok=True)
+            except:
+                print("Error during directory creation! Exception raised:")
+                print(textwrap.fill(str(e), 80))
+
+        # create symlinks for all configs
         for key, value in adaptedConfig.items():
             print("\nExecuting    {}    ->    {}".format(value, key))
             try:
                 if os.path.lexists(value):
-                    if keepbackup:
-                        os.rename(value, value + ".bck")
-                    else:
-                        os.remove(value)
+                    os.remove(value)
                 os.symlink(key, value)
             except Exception as e:
                 print("Error during symlink creation! Exception raised:")
