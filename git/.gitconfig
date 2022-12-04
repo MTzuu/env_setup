@@ -1,6 +1,6 @@
 [user]
-  email = amatthias@ethz.ch
-  name = Matthias Antony
+    email = amatthias@ethz.ch
+    name = Matthias Antony
 [core]
     editor = vim
 [color]
