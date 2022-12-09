@@ -261,10 +261,16 @@ bindsym Print exec grimshot save area "$HOME/Pictures/Screenshots/$(date "+%Y.%m
 # disable titlebar on most windows
 for_window [class=".*"] border pixel 2
 
-# bind workspaces to specific outputs
+# multimonitor setup
 output HDMI-A-1 pos 0 0 res 2560x1440
 output eDP-1 pos 320 1440 res 1920x1200
 focus output HDMI-A-1
 
+# bind workspaces to specific outputs
+workspace 1 output HDMI-A-1
+workspace 2 output eDP-1
+workspace 3 output HDMI-A-1
+workspace 4 output HDMI-A-1
+workspace 5 output eDP-1
 
 include /etc/sway/config.d/*
