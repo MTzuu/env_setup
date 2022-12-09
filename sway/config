@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 
 # gaps
-gaps inner 10
+gaps inner 8
 
 # custom font
 font pango:Consolas 12
@@ -80,6 +80,8 @@ output eDP-1 resolution 1920x1200
 input type:keyboard {
     xkb_layout de
 }
+# Japanese input
+exec --no-startup-id fcitx5 -d
 
 ### Key bindings
 #
@@ -242,14 +244,11 @@ bar {
 }
 
 # Use media keys to control volume
-# This uses amixer from package "alsa-utils"
 
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5%
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-
 bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5%
-# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle
+bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 # Use brightness controls for the notebook
 bindsym XF86MonBrightnessUp exec `sudo brightness_up`
@@ -259,8 +258,13 @@ bindsym XF86MonBrightnessDown exec `sudo brightness_down`
 bindsym $mod+Shift+s exec grimshot copy area
 bindsym Print exec grimshot save area "$HOME/Pictures/Screenshots/$(date "+%Y.%m.%d_%H:%M".png)"
 
-# disable titlebar on firefox
-# for_window [class="firefox"] border pixel 2
+# disable titlebar on most windows
 for_window [class=".*"] border pixel 2
+
+# bind workspaces to specific outputs
+output HDMI-A-1 pos 0 0 res 2560x1440
+output eDP-1 pos 320 1440 res 1920x1200
+focus output HDMI-A-1
+
 
 include /etc/sway/config.d/*
