@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 
 # gaps
-gaps inner 8
+gaps inner 4
 
 # custom font
 font pango:Consolas 12
@@ -65,6 +65,12 @@ bindsym $mod+Control+l exec swaylock -i /home/matthias/Pictures/jwst.jpg
 input type:keyboard {
     xkb_layout de
 }
+
+input type:pointer {
+  accel_profile flat
+  pointer_accel 0
+}
+
 # Japanese input
 exec --no-startup-id fcitx5 -d
 
@@ -77,6 +83,9 @@ exec --no-startup-id fcitx5 -d
 
     # Start file explorer
     bindsym $mod+Shift+n exec caja
+
+    # Start htop
+    bindsym $mod+Shift+Escape exec st -e htop
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -219,9 +228,11 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while ~/.config/sway/scripts/sway_bar.sh; do sleep 1; done
+    status_command i3blocks
+    separator_symbol " | "
 
     colors {
+        separator #ffffffa0
         statusline #ffffff
         background #32323290
         inactive_workspace #323232d0 #323232d0 #a0a0a0ff
@@ -230,10 +241,10 @@ bar {
 
 # Use media keys to control volume
 
-bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-
-bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%- && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && pkill -RTMIN+10 i3blocks
 
 # Use brightness controls for the notebook
 bindsym XF86MonBrightnessUp exec `sudo brightness_up`
@@ -241,7 +252,8 @@ bindsym XF86MonBrightnessDown exec `sudo brightness_down`
 
 # keybindings for creating screenshots
 bindsym $mod+Shift+s exec grimshot copy area
-bindsym Print exec grimshot save area "$HOME/Pictures/Screenshots/$(date "+%Y.%m.%d_%H:%M".png)"
+bindsym XF86Launch2 exec grimshot save screen "$HOME/Pictures/Screenshots/$(date "+%Y.%m.%d_%H:%M:%S".png)"
+bindsym Print exec grimshot save area "$HOME/Pictures/Screenshots/$(date "+%Y.%m.%d_%H:%M:%S".png)"
 
 # disable titlebar on most windows
 for_window [class=".*"] border pixel 2
@@ -259,5 +271,9 @@ workspace 2 output eDP-1
 workspace 3 output HDMI-A-1
 workspace 4 output HDMI-A-1
 workspace 5 output eDP-1
+
+workspace 10
+exec keepassxc
+workspace 1
 
 include /etc/sway/config.d/*
