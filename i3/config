@@ -1,4 +1,4 @@
-# Set keyboard layout to de-latin1
+# Set keyboard layout to de-latin
 exec "setxkbmap -layout de"
 
 # Set background using fehbg
@@ -178,6 +178,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+  font pango:Consolas 11
   position bottom
   status_command i3blocks 
   separator_symbol " | "
@@ -193,9 +194,9 @@ bar {
 # Use media keys to control volume
 # This uses amixer from package "alsa-utils"
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle
+# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5%
+# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5%
+# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle
 
 # disable titlebar on most windows
 for_window [class=".*"] border pixel 2
