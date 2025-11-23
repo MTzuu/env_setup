@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Network
+network=$(ip route get 1.1.1.1 | grep -Po '(?<=dev\s)\w+' | cut -f1 -d ' ')
+ip=$(ip ad | grep inet | grep enp39s0 | tr -s ' ' | cut -f3 -d ' ')
+ping=$(ping -c 1 www.google.ch | tail -1| awk '{print $4}' | cut -d '/' -f 2 | cut -d '.' -f 1)
+
+if ! [ $network ]
+then
+  network="🚫 disconnected"
+else
+  network="$ip ($ping ms)"
+fi
+
+echo "$network"

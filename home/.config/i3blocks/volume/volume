@@ -1,0 +1,29 @@
+#!/bin/sh
+
+case "$BLOCK_BUTTON" in
+  2) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
+  4) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ ;;
+  5) wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%- ;;
+esac
+
+# Audio and multimedia
+volume0=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2> /dev/null | cut -f2 -d ' ' | cut -f1 -d '.')
+volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2> /dev/null | cut -f2 -d ' ' | cut -f2 -d '.' 2> /dev/null)
+volume="$(($volume0*100+$volume))"
+mute=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2> /dev/null | cut -f3 -d ' ')
+
+if [[ $volume -ge 50 ]]; then
+  volume_status='🔊'
+elif [[ $volume -ge 10 ]]; then
+  volume_status='🔉'
+elif [[ $volume -ge 5 ]]; then
+  volume_status='🔉'
+else
+  volume_status='🔇'
+fi
+
+if [ $mute ]; then
+  volume_status='🔇'
+fi
+
+echo "$volume_status $volume %"

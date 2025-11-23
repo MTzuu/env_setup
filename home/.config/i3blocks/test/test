@@ -1,0 +1,7 @@
+#!/bin/bash
+
+case "$BLOCK_BUTTON" in
+  4) echo "Scrolled Up" ;;
+  5) echo "Scrolled Down" ;;
+  *) echo "No Scroll" ;;
+esac

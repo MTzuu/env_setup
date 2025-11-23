@@ -1,0 +1,16 @@
+[network]
+command=~/.config/i3blocks/network/network
+interval=10
+
+[volume]
+command=~/.config/i3blocks/volume/volume
+interval=once
+signal=10
+
+[date]
+command=date "+%d.%m.%Y"
+interval=60
+
+[time]
+command=date "+%H:%M"
+interval=5
