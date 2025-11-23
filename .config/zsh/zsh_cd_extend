@@ -1,0 +1,6 @@
+#!/bin/sh
+
+function cd {
+  echo $(pwd) > $HOME/.terminal_directory
+  builtin cd "$@"
+}
