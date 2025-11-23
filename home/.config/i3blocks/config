@@ -7,6 +7,10 @@ command=~/.config/i3blocks/volume/volume
 interval=once
 signal=10
 
+[cpu_temp]
+command=~/.config/i3blocks/cpu_temp/cpu_temp
+interval=10
+
 [date]
 command=date "+%d.%m.%Y"
 interval=60

@@ -1,0 +1,28 @@
+#!/bin/bash
+# i3blocks blocklet to display CPU temperature using sensors
+
+# Get CPU temperature from sensors (AMD k10temp Tctl value)
+temp=$(sensors | grep "Tctl:" | awk '{print $2}' | tr -d '+°C')
+
+# If still no temperature, show error
+if [ -z "$temp" ]; then
+    echo "N/A"
+    exit 0
+fi
+
+# Convert to integer for comparison
+temp_int=${temp%.*}
+
+# Color coding based on temperature
+if [ "$temp_int" -ge 80 ]; then
+    color="#FF0000"  # Red for high temp
+elif [ "$temp_int" -ge 60 ]; then
+    color="#FFA500"  # Orange for medium temp
+else
+    color="#00FF00"  # Green for normal temp
+fi
+
+# Output
+echo "${temp}°C"
+echo "${temp}°C"
+echo "$color"
