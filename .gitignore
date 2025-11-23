@@ -1,2 +1,4 @@
 *.pyc
 __pycache__
+home/.config/zsh/.histfile
+home/.config/zsh/.zcompdump

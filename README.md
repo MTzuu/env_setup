@@ -1,7 +1,9 @@
 # env_setup
 
-The purpose of this project is to synchronise all config files across my linux machines.
+The purpose of this project is to synchronize configuration files across Linux machines.
 
-The python script installSymLinks.py creates symlinks to the config files in the home directory.
-
-The config files are saved in subdirectories. They get tracked in linkConfig.py, where each configfile gets listed specifically.
+`installSymLinks.py` creates symlinks from the `./home` directory in this
+repository into the current user's home directory. The `linkConfig.py`
+module scans the `./home` tree and automatically builds the list of
+items to link — you don't need to edit it when adding files or folders
+to `./home`.

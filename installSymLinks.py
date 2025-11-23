@@ -1,73 +1,57 @@
 #!/usr/bin/env python
 
-import os               # used to perform filesystem actions
-import textwrap
-from pathlib import Path
+import os
+import shutil
 
-from linkConfig import Config
+from linkConfig import get_links
+from helpers import confirm
 
-def query_yes_no(question, default="yes") -> "bool":
-    valid = {"yes" : True, "y": True, "no" : False, "n" : False}
-    if default is None:
-        prompt = " [y/n] "
-    elif default == "yes":
-        prompt = " [Y/n] "
-    elif default == "no":
-        prompt = " [y/N] "
-    else:
-        raise ValueError("invalid default answer: '%s'" % default)
-
-    while True:
-        choice = input(question + prompt)
-        if default is not None and choice == "":
-            return valid[default]
-        elif choice in valid:
-            return valid[choice]
-        else:
-            print("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
 def main():
-    config = Config.Linux
-    dirs = Config.LinuxDirs
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    src_home = os.path.join(current_dir, 'home')
 
-    currentDir = os.path.dirname(os.path.abspath(__file__))
-    adaptedConfig = {}
+    caller_home = os.path.expanduser('~')
+    links = get_links(src_home, user_home=caller_home)
+    if not links:
+        print("No items found in './home' to link. Nothing to do.")
+        return
 
-    for key in config:
-        newkey = os.path.join(currentDir, key)
-        adaptedConfig[newkey] = config[key]
+    print("{:-^80}".format("Create symlinks from ./home to your $HOME"))
+    print("Planned links:")
+    for src, target in links:
+        rel = os.path.relpath(target, caller_home)
+        print(f"    ~/{rel}    ->    {src}")
 
-    print("{:-^80}".format("Replace Configs with SymLinks"))
-    print("{:80}".format("The following links will be created: "))
+    if not confirm("Do you want to continue and create/overwrite these links?", default=True):
+        print("No changes to your system were made")
+        return
 
-    for key, value in config.items():
-        print("    {}    ->    {}".format(value, key))
+    for src, target in links:
+        target = os.path.abspath(target)
+        parent = os.path.dirname(target) or caller_home
 
-    if query_yes_no("Do you want to continue?"):
-        # create directories needed for config files
-        # living in ~/.config
-        for dir in dirs:
-            try:
-                Path(dir).mkdir(parents=True, exist_ok=True)
-            except:
-                print("Error during directory creation! Exception raised:")
-                print(textwrap.fill(str(e), 80))
+        try:
+            os.makedirs(parent, exist_ok=True)
+        except Exception as e:
+            print(f"Error creating parent directory {parent}: {e}")
+            continue
 
-        # create symlinks for all configs
-        for key, value in adaptedConfig.items():
-            print("\nExecuting    {}    ->    {}".format(value, key))
-            try:
-                if os.path.lexists(value):
-                    os.remove(value)
-                os.symlink(key, value)
-            except Exception as e:
-                print("Error during symlink creation! Exception raised:")
-                print(textwrap.fill(str(e), 80))
-            else:
-                print("    Done!")
-    else:
-        print("{:80}".format("No changes to your system were made"))
-        exit(1)
+        print(f"\nExecuting: {target} -> {src}")
+        try:
+            if os.path.lexists(target):
+                # remove existing symlink or file; remove directories recursively
+                if os.path.islink(target) or os.path.isfile(target):
+                    os.remove(target)
+                elif os.path.isdir(target):
+                    shutil.rmtree(target)
+
+            os.symlink(src, target)
+        except Exception as e:
+            print("Error during symlink creation:", e)
+        else:
+            print("    Done!")
+
 
 if __name__ == '__main__':
     main()
