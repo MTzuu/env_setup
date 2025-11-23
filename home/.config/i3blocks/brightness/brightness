@@ -1,0 +1,38 @@
+#!/bin/bash
+# i3blocks blocklet for external monitor brightness control
+# Uses /usr/bin/brightness (ddcutil) to control monitors
+# Supports mouse wheel: scroll up/down to adjust brightness
+
+# Handle mouse button events
+case $BLOCK_BUTTON in
+    4) # Scroll up - increase brightness
+        /usr/bin/brightness up 25 >/dev/null 2>&1
+        pkill -RTMIN+11 i3blocks
+        ;;
+    5) # Scroll down - decrease brightness
+        /usr/bin/brightness down 25 >/dev/null 2>&1
+        pkill -RTMIN+11 i3blocks
+        ;;
+    1) # Left click - set to 100%
+        /usr/bin/brightness set 100 >/dev/null 2>&1
+        pkill -RTMIN+11 i3blocks
+        ;;
+    3) # Right click - set to 50%
+        /usr/bin/brightness set 50 >/dev/null 2>&1
+        pkill -RTMIN+11 i3blocks
+        ;;
+esac
+
+# Get current brightness
+current=$(/usr/bin/brightness get 2>/dev/null)
+
+# If brightness reading failed, show N/A
+if [ -z "$current" ]; then
+    echo "N/A"
+    echo "N/A"
+    exit 0
+fi
+
+# Display with sun emoji
+echo "☀ ${current}%"
+echo "☀ ${current}%"

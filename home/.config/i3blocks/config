@@ -11,6 +11,11 @@ signal=10
 command=~/.config/i3blocks/cpu_temp/cpu_temp
 interval=10
 
+[brightness]
+command=~/.config/i3blocks/brightness/brightness
+interval=once
+signal=11
+
 [date]
 command=date "+%d.%m.%Y"
 interval=60
