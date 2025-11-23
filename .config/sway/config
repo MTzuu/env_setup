@@ -33,7 +33,7 @@ set $term /bin/st
 set $menu dmenu_run
 
 # lock screen
-bindsym $mod+Control+l exec swaylock -i /home/matthias/Pictures/jwst.jpg
+bindsym $mod+Control+l exec swaylock --clock --indicator --timestr "%H:%M" --datestr "%d.%m.%Y" --effect-blur 6x6 --screenshot
 
 ### Idle configuration
 #
@@ -83,6 +83,9 @@ exec --no-startup-id fcitx5 -d
 
     # Start file explorer
     bindsym $mod+Shift+n exec caja
+
+    # Start calculator
+    bindsym XF86Calculator exec st -e python
 
     # Start htop
     bindsym $mod+Shift+Escape exec st -e htop
@@ -259,18 +262,17 @@ bindsym Print exec grimshot save area "$HOME/Pictures/Screenshots/$(date "+%Y.%m
 for_window [class=".*"] border pixel 2
 
 # multimonitor setup
-output HDMI-A-1 pos 0 0 res 2560x1440
-output eDP-1 pos 320 1440 res 1920x1200
-focus output HDMI-A-1
-output eDP-1 background ~/Pictures/jwst_pic.png fill
-output HDMI-A-1 background ~/Pictures/jwst_pic.png fill
+output DP-1 pos 0 0 res 2560x1440
+output DP-3 pos 2560 0 res 2560x1440
+focus output DP-1
+output DP-1 background ~/Pictures/jwst_pic.png fill
+output DP-3 background ~/Pictures/jwst_pic.png fill
 
 # bind workspaces to specific outputs
-workspace 1 output HDMI-A-1
-workspace 2 output eDP-1
-workspace 3 output HDMI-A-1
-workspace 4 output HDMI-A-1
-workspace 5 output eDP-1
+workspace 1 output DP-1
+workspace 2 output DP-1
+workspace 3 output DP-3
+workspace 4 output DP-3
 
 workspace 10
 exec keepassxc

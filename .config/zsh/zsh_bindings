@@ -1,0 +1,28 @@
+# german vim navigation keys
+
+bindkey -M vicmd 'j' vi-backward-char
+bindkey -M vicmd 'l' vi-up-line-or-history
+bindkey -M vicmd 'ö' vi-forward-char
+bindkey -M vicmd 'k' vi-down-line-or-history
+
+bindkey -M menuselect 'j' vi-backward-char
+bindkey -M menuselect 'l' vi-up-line-or-history
+bindkey -M menuselect 'ö' vi-forward-char
+bindkey -M menuselect 'k' vi-down-line-or-history
+
+# make del behave as expected
+
+bindkey -M vicmd '^[[3~' delete-char
+bindkey -M viins '^[[3~' delete-char
+
+# make home behave as expected
+
+bindkey '^[[H' beginning-of-line
+bindkey -M vicmd '^[[H' beginning-of-line
+bindkey -M viins '^[[H' beginning-of-line
+
+# make end behave as expected
+
+bindkey '^[[4~' end-of-line
+bindkey -M vicmd '^[[4~' end-of-line
+bindkey -M viins '^[[4~' end-of-line

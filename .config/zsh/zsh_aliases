@@ -1,10 +1,4 @@
-#
-# ~/.bash_aliases
-#
-
-
 # sudo alias, so u can still use aliases when running command with sudo
-
 alias sudo='sudo '
 
 # disk usage
@@ -19,3 +13,6 @@ alias ll='ls -ahl'
 
 # pacman aliases
 alias pacro='pacman -Rns $(pacman -Qtdq)'
+
+# go to directory, that was last cd'd into
+alias ccd='cd `cat ~/.terminal_directory`'
