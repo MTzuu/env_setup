@@ -1,8 +1,8 @@
 #!/bin/bash
 # i3blocks blocklet to display CPU temperature using sensors
 
-# Get CPU temperature from sensors (AMD k10temp Tctl value)
-temp=$(sensors | grep "Tctl:" | awk '{print $2}' | tr -d '+°C')
+# Get CPU temperature from sensors (Intel coretemp Package id value)
+temp=$(sensors | grep "Package id 0:" | awk '{print $4}' | tr -d '+°C')
 
 # If still no temperature, show error
 if [ -z "$temp" ]; then
