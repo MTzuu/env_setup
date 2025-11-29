@@ -16,3 +16,14 @@ alias pacro='pacman -Rns $(pacman -Qtdq)'
 
 # go to directory, that was last cd'd into
 alias ccd='cd `cat ~/.terminal_directory`'
+
+# AUR helper function - clone AUR packages
+aur() {
+    if [ -z "$1" ]; then
+        echo "Usage: aur <package-name>"
+        return 1
+    fi
+    local aur_dir="$HOME/src/AUR"
+    mkdir -p "$aur_dir"
+    git clone "https://aur.archlinux.org/$1.git" "$aur_dir/$1"
+}
